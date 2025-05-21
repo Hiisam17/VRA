@@ -97,7 +97,7 @@ const TaskList: React.FC<TaskListProps> = ({
                   Phản hồi
                 </div>
               </th>
-              <Magnet padding={300} disabled={false} magnetStrength={10}>
+              <Magnet padding={100} disabled={false} magnetStrength={10}>
                 <th className="px-6 py-3 text-sm font-medium text-gray-500 uppercase tracking-wider text-center">
                 {hasFeedback ? (
                   <div className="flex items-center justify-center bg-blue-100 rounded-full px-3 py-1.5">

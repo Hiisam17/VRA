@@ -649,20 +649,20 @@ const HomePage: React.FC = () => {
                         </div>
                       </CardItem>
 
-                      <div className="mt-auto flex justify-between items-center">
-                        <CardItem
+                      <div className="mt-auto flex justify-end items-center">
+                        {/* <CardItem
                           translateZ={30}
                           as="a"
                           className="text-gray-700 hover:text-black text-lg flex items-center font-medium"
                         >
                           Try now →
-                        </CardItem>
+                        </CardItem> */}
                         <CardItem
                           translateZ={30}
                           as="button"
                           className="px-6 py-3 rounded-full bg-black text-white font-medium"
                         >
-                          Sign up
+                          Try now →
                         </CardItem>
                       </div>
                     </CardBody>
