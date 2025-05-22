@@ -262,7 +262,7 @@ const DetailReport: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Video thực hành */}
             <div className="lg:col-span-2">
-              <BackgroundGradient className="rounded-[22px] h-full">
+              
                 <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 h-full flex flex-col">
                   <div className="p-5 border-b border-gray-100 flex-shrink-0">
                     <h2 className="text-xl font-bold text-gray-800 flex items-center">
@@ -283,12 +283,12 @@ const DetailReport: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </BackgroundGradient>
+              
             </div>
 
             {/* Kết quả */}
             <div className="lg:col-span-1">
-              <BackgroundGradient className="rounded-[22px] h-full">
+              
                 <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 flex flex-col h-full">
                   <div className="p-5 border-b border-gray-100 flex-shrink-0">
                     <h2 className="text-xl font-bold text-gray-800 flex items-center">
@@ -423,7 +423,7 @@ const DetailReport: React.FC = () => {
                     )}
                   </div>
                 </div>
-              </BackgroundGradient>
+              
             </div>
           </div>
         </main>
