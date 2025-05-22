@@ -18,6 +18,7 @@ import {
 } from "./components";
 import { tasks } from "./components/TaskList";
 import { generateText } from "../../services/geminiAiService";
+import { BackgroundGradient } from "../../components/lib-animated/Background_Gradient";
 
 const DetailReport: React.FC = () => {
   const navigate = useNavigate();
@@ -261,164 +262,168 @@ const DetailReport: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Video thực hành */}
             <div className="lg:col-span-2">
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 h-full flex flex-col">
-                <div className="p-5 border-b border-gray-100 flex-shrink-0">
-                  <h2 className="text-xl font-bold text-gray-800 flex items-center">
-                    <FileText className="mr-2 text-primary-color" size={20} />
-                    Video thực hành
-                  </h2>
-                  <p className="text-gray-500 text-sm mt-1">Xem lại quá trình thực hiện nhiệm vụ</p>
-                </div>
-                <div className="p-6 flex-grow flex flex-col justify-center">
-                  <div className="w-full aspect-video bg-gray-200 rounded-lg overflow-hidden">
-                    <iframe
-                      className="w-full h-full"
-                      src="https://www.youtube.com/embed/-Wwp91N7P1M?list=PLcMNZDALWdfdp6q-4WbnV99I9_YgWBhru"
-                      title="Video thực hành"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
+              <BackgroundGradient className="rounded-[22px] h-full">
+                <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 h-full flex flex-col">
+                  <div className="p-5 border-b border-gray-100 flex-shrink-0">
+                    <h2 className="text-xl font-bold text-gray-800 flex items-center">
+                      <FileText className="mr-2 text-primary-color" size={20} />
+                      Video thực hành
+                    </h2>
+                    <p className="text-gray-500 text-sm mt-1">Xem lại quá trình thực hiện nhiệm vụ</p>
+                  </div>
+                  <div className="p-6 flex-grow flex flex-col justify-center">
+                    <div className="w-full aspect-video bg-gray-200 rounded-lg overflow-hidden">
+                      <iframe
+                        className="w-full h-full"
+                        src="https://www.youtube.com/embed/-Wwp91N7P1M?list=PLcMNZDALWdfdp6q-4WbnV99I9_YgWBhru"
+                        title="Video thực hành"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </BackgroundGradient>
             </div>
 
             {/* Kết quả */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 flex flex-col h-full">
-                <div className="p-5 border-b border-gray-100 flex-shrink-0">
-                  <h2 className="text-xl font-bold text-gray-800 flex items-center">
-                    <Award className="mr-2 text-primary-color" size={20} />
-                    Kết quả
-                  </h2>
-                  <p className="text-gray-500 text-sm mt-1">Đánh giá tổng thể buổi học</p>
-                </div>
+              <BackgroundGradient className="rounded-[22px] h-full">
+                <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 flex flex-col h-full">
+                  <div className="p-5 border-b border-gray-100 flex-shrink-0">
+                    <h2 className="text-xl font-bold text-gray-800 flex items-center">
+                      <Award className="mr-2 text-primary-color" size={20} />
+                      Kết quả
+                    </h2>
+                    <p className="text-gray-500 text-sm mt-1">Đánh giá tổng thể buổi học</p>
+                  </div>
 
-                <div className="p-4 flex-grow overflow-hidden flex flex-col">
-                  {!score ? (
-                    isGeneratingEvaluation ? (
-                      // Loading state
-                      <div className="flex flex-col items-center justify-center text-center py-6 flex-grow">
-                        <div className="relative w-40 h-40 flex items-center justify-center mb-6">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="h-32 w-32 rounded-full border-4 border-blue-50 border-t-[#19395E] animate-spin"></div>
+                  <div className="p-4 flex-grow overflow-hidden flex flex-col">
+                    {!score ? (
+                      isGeneratingEvaluation ? (
+                        // Loading state
+                        <div className="flex flex-col items-center justify-center text-center py-6 flex-grow">
+                          <div className="relative w-40 h-40 flex items-center justify-center mb-6">
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="h-32 w-32 rounded-full border-4 border-blue-50 border-t-[#19395E] animate-spin"></div>
+                            </div>
+                            <div className="absolute inset-0 flex flex-col items-center justify-center">
+                              <Bot size={40} className="text-[#19395E] mb-3 animate-pulse" />
+                              <span className="text-[#19395E] font-medium text-base">VRA AI đang đánh giá...</span>
+                            </div>
                           </div>
-                          <div className="absolute inset-0 flex flex-col items-center justify-center">
-                            <Bot size={40} className="text-[#19395E] mb-3 animate-pulse" />
-                            <span className="text-[#19395E] font-medium text-base">VRA AI đang đánh giá...</span>
-                          </div>
-                        </div>
-                        <div className="bg-blue-50 rounded-lg p-5 border border-blue-100 w-full">
-                          <p className="text-gray-600 text-sm text-center mb-0 leading-relaxed">
-                            Đang phân tích video và các số liệu để đưa ra đánh giá chi tiết. Vui lòng đợi trong giây lát...
-                          </p>
-                        </div>
-                      </div>
-                    ) : evaluationError ? (
-                      // Error state
-                      <div className="flex flex-col items-center justify-center text-center py-6 flex-grow">
-                        <div className="w-40 h-40 flex items-center justify-center mb-6 bg-red-50 rounded-full border border-red-100 shadow-sm">
-                          <div className="text-center p-4">
-                            <AlertTriangle size={40} className="text-red-500 mx-auto mb-3" />
-                            <span className="text-red-500 font-medium block mb-4 text-base">Lỗi kết nối</span>
-                            <button 
-                              onClick={requestAIEvaluation}
-                              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full transition-all duration-200 flex items-center mx-auto shadow-sm hover:shadow-md text-sm"
-                            >
-                              <AlertTriangle size={18} className="mr-2" />
-                              <span>Thử lại</span>
-                            </button>
+                          <div className="bg-blue-50 rounded-lg p-5 border border-blue-100 w-full">
+                            <p className="text-gray-600 text-sm text-center mb-0 leading-relaxed">
+                              Đang phân tích video và các số liệu để đưa ra đánh giá chi tiết. Vui lòng đợi trong giây lát...
+                            </p>
                           </div>
                         </div>
-                        <div className="bg-red-50 rounded-lg p-5 border border-red-100 w-full">
-                          <p className="text-gray-600 text-sm mb-0 leading-relaxed">
-                            Đã xảy ra lỗi khi kết nối với VRA AI. Vui lòng kiểm tra kết nối mạng và thử lại sau.
-                          </p>
-                        </div>
-                      </div>
-                    ) : (
-                      // Request evaluation button
-                      <div className="flex flex-col items-center justify-center text-center py-6 flex-grow">
-                        <div className="w-40 h-40 flex items-center justify-center mb-6 bg-gray-50 rounded-full border border-gray-200 shadow-sm">
-                          <div className="text-center p-4">
-                            <Bot size={40} className="text-gray-400 mx-auto mb-1" />
-                            <span className="text-gray-500 font-medium block mb-2 text-base">Chưa có đánh giá</span>
-                            {Object.keys(taskFeedbacks).length > 0 ? (
+                      ) : evaluationError ? (
+                        // Error state
+                        <div className="flex flex-col items-center justify-center text-center py-6 flex-grow">
+                          <div className="w-40 h-40 flex items-center justify-center mb-6 bg-red-50 rounded-full border border-red-100 shadow-sm">
+                            <div className="text-center p-4">
+                              <AlertTriangle size={40} className="text-red-500 mx-auto mb-3" />
+                              <span className="text-red-500 font-medium block mb-4 text-base">Lỗi kết nối</span>
                               <button 
                                 onClick={requestAIEvaluation}
-                                className="bg-[#19395E] hover:bg-[#254b76] text-white px-4 py-2 rounded-full transition-all duration-200 flex items-center mx-auto shadow-sm hover:shadow-md text-sm"
+                                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full transition-all duration-200 flex items-center mx-auto shadow-sm hover:shadow-md text-sm"
                               >
-                                <Bot size={20} className="mr-2" />
-                                <span>Yêu cầu đánh giá</span>
+                                <AlertTriangle size={18} className="mr-2" />
+                                <span>Thử lại</span>
                               </button>
-                            ) : (
-                              <button 
-                                className="bg-gray-300 text-gray-600 px-4 py-2 rounded-full flex items-center mx-auto shadow-sm text-sm cursor-not-allowed"
-                                title="Cần tạo nhận xét cho các nhiệm vụ trước khi đánh giá"
-                              >
-                                <Bot size={18} className="mr-2" />
-                                <span>Yêu cầu đánh giá</span>
-                              </button>
-                            )}
+                            </div>
+                          </div>
+                          <div className="bg-red-50 rounded-lg p-5 border border-red-100 w-full">
+                            <p className="text-gray-600 text-sm mb-0 leading-relaxed">
+                              Đã xảy ra lỗi khi kết nối với VRA AI. Vui lòng kiểm tra kết nối mạng và thử lại sau.
+                            </p>
                           </div>
                         </div>
-                        <div className="bg-blue-50 rounded-lg p-5 border border-blue-100 w-full">
-                          <p className="text-gray-600 text-sm mb-0 leading-relaxed">
-                            {Object.keys(taskFeedbacks).length > 0 
-                              ? "Sử dụng trí tuệ nhân tạo để phân tích và đưa ra đánh giá tổng quan về buổi học. AI sẽ đánh giá điểm số dựa trên các tiêu chí chất lượng." 
-                              : "Vui lòng tạo nhận xét cho từng nhiệm vụ trước khi yêu cầu đánh giá tổng thể buổi học."}
-                          </p>
-                        </div>
-                      </div>
-                    )
-                  ) : (
-                    // Results with score
-                    <div className="flex flex-col items-center py-6 flex-grow">
-                      {/* Score star icon - make it larger */}
-                      <div className="flex justify-center items-center w-full mb-6">
-                        <div className="relative w-44 h-44 flex-shrink-0 flex items-center justify-center">
-                          <svg viewBox="0 0 200 200" width="176" height="176" className="drop-shadow-md">
-                            <polygon
-                              points="100,20 123,78 185,78 135,120 153,180 100,145 47,180 65,120 15,78 77,78"
-                              fill={getStarColor(score || 0)}
-                              stroke="#19395E"
-                              strokeWidth="8"
-                              style={{ filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.15))" }}
-                            />
-                          </svg>
-                          <div className="absolute inset-0 flex flex-col items-center justify-center">
-                            <span className="text-7xl font-extrabold text-white drop-shadow-md">{score}</span>
+                      ) : (
+                        // Request evaluation button
+                        <div className="flex flex-col items-center justify-center text-center py-6 flex-grow">
+                          <div className="w-40 h-40 flex items-center justify-center mb-6 bg-gray-50 rounded-full border border-gray-200 shadow-sm">
+                            <div className="text-center p-4">
+                              <Bot size={40} className="text-gray-400 mx-auto mb-1" />
+                              <span className="text-gray-500 font-medium block mb-2 text-base">Chưa có đánh giá</span>
+                              {Object.keys(taskFeedbacks).length > 0 ? (
+                                <button 
+                                  onClick={requestAIEvaluation}
+                                  className="bg-[#19395E] hover:bg-[#254b76] text-white px-4 py-2 rounded-full transition-all duration-200 flex items-center mx-auto shadow-sm hover:shadow-md text-sm"
+                                >
+                                  <Bot size={20} className="mr-2" />
+                                  <span>Yêu cầu đánh giá</span>
+                                </button>
+                              ) : (
+                                <button 
+                                  className="bg-gray-300 text-gray-600 px-4 py-2 rounded-full flex items-center mx-auto shadow-sm text-sm cursor-not-allowed"
+                                  title="Cần tạo nhận xét cho các nhiệm vụ trước khi đánh giá"
+                                >
+                                  <Bot size={18} className="mr-2" />
+                                  <span>Yêu cầu đánh giá</span>
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                          <div className="bg-blue-50 rounded-lg p-5 border border-blue-100 w-full">
+                            <p className="text-gray-600 text-sm mb-0 leading-relaxed">
+                              {Object.keys(taskFeedbacks).length > 0 
+                                ? "Sử dụng trí tuệ nhân tạo để phân tích và đưa ra đánh giá tổng quan về buổi học. AI sẽ đánh giá điểm số dựa trên các tiêu chí chất lượng." 
+                                : "Vui lòng tạo nhận xét cho từng nhiệm vụ trước khi yêu cầu đánh giá tổng thể buổi học."}
+                            </p>
                           </div>
                         </div>
-                      </div>
-                      
-                      <div className="text-center w-full mb-6">
-                        <span className="text-xl font-semibold text-blue-900 inline-block">Điểm số đánh giá</span>
-                      </div>
+                      )
+                    ) : (
+                      // Results with score
+                      <div className="flex flex-col items-center py-6 flex-grow">
+                        {/* Score star icon - make it larger */}
+                        <div className="flex justify-center items-center w-full mb-6">
+                          <div className="relative w-44 h-44 flex-shrink-0 flex items-center justify-center">
+                            <svg viewBox="0 0 200 200" width="176" height="176" className="drop-shadow-md">
+                              <polygon
+                                points="100,20 123,78 185,78 135,120 153,180 100,145 47,180 65,120 15,78 77,78"
+                                fill={getStarColor(score || 0)}
+                                stroke="#19395E"
+                                strokeWidth="8"
+                                style={{ filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.15))" }}
+                              />
+                            </svg>
+                            <div className="absolute inset-0 flex flex-col items-center justify-center">
+                              <span className="text-7xl font-extrabold text-white drop-shadow-md">{score}</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="text-center w-full mb-6">
+                          <span className="text-xl font-semibold text-blue-900 inline-block">Điểm số đánh giá</span>
+                        </div>
 
-                      {/* Evaluation Summary - improve scrolling for long content */}
-                      <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 mb-6 w-full max-h-[180px] overflow-y-auto custom-scrollbar">
-                        <div className="flex items-start">
-                          <div className="bg-white p-3 rounded-full flex-shrink-0 mr-4 mt-0.5 shadow-sm">
-                            <Bot size={24} className="text-[#19395E]" />
-                          </div>
-                          <div className="text-gray-700 text-[15px] mb-0 flex-1 leading-relaxed">
-                            {evaluationSummary}
+                        {/* Evaluation Summary - improve scrolling for long content */}
+                        <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 mb-6 w-full max-h-[180px] overflow-y-auto custom-scrollbar">
+                          <div className="flex items-start">
+                            <div className="bg-white p-3 rounded-full flex-shrink-0 mr-4 mt-0.5 shadow-sm">
+                              <Bot size={24} className="text-[#19395E]" />
+                            </div>
+                            <div className="text-gray-700 text-[15px] mb-0 flex-1 leading-relaxed">
+                              {evaluationSummary}
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <button
-                        onClick={handleOpenEvaluationChat}
-                        className="w-full px-5 py-3 bg-[#19395E] hover:bg-[#254b76] text-white rounded-lg font-medium transition-all duration-200 shadow-sm flex items-center justify-center group text-base"
-                      >
-                        <MessageCircle size={22} className="mr-2 group-hover:animate-pulse" />
-                        Trao đổi thêm với VRA AI
-                      </button>
-                    </div>
-                  )}
+                        <button
+                          onClick={handleOpenEvaluationChat}
+                          className="w-full px-5 py-3 bg-[#19395E] hover:bg-[#254b76] text-white rounded-lg font-medium transition-all duration-200 shadow-sm flex items-center justify-center group text-base"
+                        >
+                          <MessageCircle size={22} className="mr-2 group-hover:animate-pulse" />
+                          Trao đổi thêm với VRA AI
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
+              </BackgroundGradient>
             </div>
           </div>
         </main>
