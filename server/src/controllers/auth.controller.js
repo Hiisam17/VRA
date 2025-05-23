@@ -181,3 +181,64 @@ exports.logout = async (req, res) => {
     res.status(500).json({ message: 'Đăng xuất thất bại' });
   }
 };
+
+// Đổi mật khẩu
+exports.changePassword = async (req, res) => {
+  try {
+    console.log('Change password request received:', JSON.stringify(req.body, null, 2));
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+    
+    // Kiểm tra xem 2 mật khẩu có khớp nhau không
+    if (newPassword !== confirmPassword) {
+      console.log('Password mismatch error');
+      return res.status(400).json({ message: 'Mật khẩu mới và xác nhận mật khẩu không khớp' });
+    }
+    
+    // Lấy token từ header hoặc cookie
+    const token = req.headers.authorization?.split(' ')[1] || req.cookies.access_token;
+    console.log('Token exists:', !!token);
+    
+    if (!token) {
+      console.log('No token provided');
+      return res.status(401).json({ message: 'Token không tồn tại' });
+    }
+    
+    // Xác thực token và lấy thông tin user
+    console.log('Authenticating token with Supabase...');
+    const { data: userData, error: userError } = await supabase.auth.getUser(token);
+    
+    if (userError || !userData.user) {
+      console.log('Token validation error:', userError);
+      return res.status(401).json({ message: 'Token không hợp lệ', error: userError?.message });
+    }
+    console.log('User authenticated:', userData.user.email);
+    
+    // Xác thực mật khẩu hiện tại
+    console.log('Verifying current password...');
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: userData.user.email,
+      password: currentPassword,
+    });
+    
+    if (signInError) {
+      console.log('Current password verification failed:', signInError.message);
+      return res.status(400).json({ message: 'Mật khẩu hiện tại không đúng' });
+    }
+    console.log('Current password verified successfully');
+    
+    // Cập nhật mật khẩu mới
+    const { error: updateError } = await supabase.auth.updateUser({
+      password: newPassword,
+    });
+    
+    if (updateError) {
+      console.error('Error updating password:', updateError);
+      return res.status(500).json({ message: 'Lỗi khi cập nhật mật khẩu' });
+    }
+    
+    res.json({ message: 'Đổi mật khẩu thành công' });
+  } catch (error) {
+    console.error('Change password error:', error);
+    res.status(500).json({ message: 'Lỗi khi đổi mật khẩu', error: error.message });
+  }
+};

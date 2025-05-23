@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Menu, X, User, Lock, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import ChangePasswordModal from "../Auth/ChangePasswordModal";
 
 interface UserMenuProps {
   onLogout: () => void;
@@ -9,6 +10,7 @@ interface UserMenuProps {
 
 const UserMenu: React.FC<UserMenuProps> = ({ onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
   const navigate = useNavigate();
 
   const menuItems = [
@@ -18,13 +20,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ onLogout }) => {
       onClick: () => {
         navigate("/profile");
       },
-    },
-    {
+    },    {
       icon: <Lock className="h-5 w-5" />,
       label: "Đổi mật khẩu",
       onClick: () => {
-        // TODO: Implement change password modal
-        alert("Chức năng đang được phát triển");
+        setShowChangePasswordModal(true);
+        setIsOpen(false); // Đóng menu khi mở modal
       },
     },
     {
@@ -33,7 +34,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ onLogout }) => {
       onClick: onLogout,
     },
   ];
-
   return (
     <div className="relative">
       <motion.button
@@ -102,6 +102,11 @@ const UserMenu: React.FC<UserMenuProps> = ({ onLogout }) => {
           </>
         )}
       </AnimatePresence>
+
+      <ChangePasswordModal
+        isOpen={showChangePasswordModal}
+        onClose={() => setShowChangePasswordModal(false)}
+      />
     </div>
   );
 };

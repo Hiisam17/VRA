@@ -16,4 +16,7 @@ router.get('/validate-token', authController.validateToken);
 // Đăng xuất
 router.post('/logout', authController.logout);
 
+// Đổi mật khẩu
+router.post('/change-password', validationMiddleware.validateChangePassword, authController.changePassword);
+
 module.exports = router;

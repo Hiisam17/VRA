@@ -47,3 +47,32 @@ exports.validateLogin = [
     next();
   }
 ];
+
+// Middleware xác thực thông tin đổi mật khẩu
+exports.validateChangePassword = [
+  // Kiểm tra mật khẩu hiện tại
+  check('currentPassword')
+    .notEmpty().withMessage('Vui lòng nhập mật khẩu hiện tại'),
+  
+  // Kiểm tra mật khẩu mới
+  check('newPassword')
+    .isLength({ min: 6 }).withMessage('Mật khẩu mới phải có ít nhất 6 ký tự'),
+  
+  // Kiểm tra xác nhận mật khẩu mới
+  check('confirmPassword')
+    .custom((value, { req }) => {
+      if (value !== req.body.newPassword) {
+        throw new Error('Xác nhận mật khẩu không khớp');
+      }
+      return true;
+    }),
+  
+  // Middleware xử lý kết quả validation
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  }
+];
