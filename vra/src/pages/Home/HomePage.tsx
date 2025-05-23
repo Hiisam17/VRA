@@ -347,12 +347,12 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     const fetchSupervisor = async () => {
-      if (!user?.username) return;
+      if (!user?.email) return;
       
       try {
-        console.log('Fetching supervisor for email:', user.username);
+        console.log('Fetching supervisor for email:', user.email);
         const supervisorService = SupervisorService.getInstance();
-        const supervisorData = await supervisorService.getSupervisorByEmail(user.username);
+        const supervisorData = await supervisorService.getSupervisorByEmail(user.email);
         console.log('Fetched supervisor data:', supervisorData);
         setSupervisor(supervisorData);
       } catch (err) {
@@ -361,7 +361,7 @@ const HomePage: React.FC = () => {
     };
 
     fetchSupervisor();
-  }, [user?.username]);
+  }, [user?.email]);
 
   useEffect(() => {
     const fetchChildStats = async () => {

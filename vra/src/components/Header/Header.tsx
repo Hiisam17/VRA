@@ -10,7 +10,7 @@ interface HeaderProps {
   setShowRegisterForm: (show: boolean) => void;
   isLoggedIn?: boolean;
   user?: {
-    username: string;
+    email: string;
     avatar?: string;
   };
   onLogout?: () => void;
@@ -76,7 +76,7 @@ const Header: React.FC<HeaderProps> = ({
                     : 'text-gray-800 hover:text-primary-light'
                   }`}
               >
-                Danh sách học sinh
+                Danh sách buổi học
               </Link>
               <button
                 className={`nav-link font-semibold rounded transition-all duration-300 ${location.pathname.includes('config')
@@ -109,7 +109,7 @@ const Header: React.FC<HeaderProps> = ({
             ) : (
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2 bg-primary-color/10 py-2 rounded-full">
-                  <span className="text-primary-color font-medium text-[16.8px]">{user?.username}</span>
+                  <span className="text-primary-color font-medium text-[16.8px]">{user?.email}</span>
                 </div>
                 <UserMenu onLogout={onLogout || (() => { })} />
               </div>
@@ -196,7 +196,7 @@ const Header: React.FC<HeaderProps> = ({
                       <div className="h-8 w-8 rounded-full bg-primary-color flex items-center justify-center">
                         <User className="h-5 w-5 text-white" />
                       </div>
-                      <span className="text-primary-color font-medium">{user?.username}</span>
+                      <span className="text-primary-color font-medium">{user?.email}</span>
                     </div>
                     <button
                       onClick={() => {

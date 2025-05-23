@@ -9,7 +9,7 @@ import { SupervisorService } from '../../services/supervisorService';
 
 interface MainLayoutContext {
   isLoggedIn: boolean;
-  user: { username: string; avatar?: string } | null;
+  user: { username: string; email: string; avatar?: string } | null;
 }
 
 const PersonalInfoPage: React.FC = () => {
@@ -22,12 +22,12 @@ const PersonalInfoPage: React.FC = () => {
   //Fetch supervisor data when user is available
   useEffect(() => {   
     const fetchSupervisor = async () => {
-      if (!user?.username) return;
+      if (!user?.email) return;
       
       try {
-        console.log('Fetching supervisor for email:', user.username);
+        console.log('Fetching supervisor for email:', user.email);
         const supervisorService = SupervisorService.getInstance();
-        const supervisorData = await supervisorService.getSupervisorByEmail(user.username);
+        const supervisorData = await supervisorService.getSupervisorByEmail(user.email);
         console.log('Fetched supervisor data:', supervisorData);
         setSupervisor(supervisorData);
       } catch (err) {
@@ -36,7 +36,7 @@ const PersonalInfoPage: React.FC = () => {
     };
 
     fetchSupervisor();
-  }, [user?.username]);
+  }, [user?.email]);
 
   useEffect(() => {
     const fetchStudentData = async () => {
