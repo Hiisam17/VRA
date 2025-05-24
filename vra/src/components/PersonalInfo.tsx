@@ -16,10 +16,10 @@ interface PersonalInfoProps {
 }
 
 // Define the context type from MainLayout
-interface MainLayoutContext {
+type MainLayoutContext = {
   isLoggedIn: boolean;
-  user: { username: string; email: string; avatar?: string } | null;
-}
+  user: { username: string; avatar?: string } | null;
+};
 
 const PersonalInfo: React.FC<PersonalInfoProps> = ({ studentData: initialStudentData, supervisorId }) => {
   const [form] = Form.useForm();
@@ -32,12 +32,12 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ studentData: initialStudent
   // Fetch supervisor data when user is available
   useEffect(() => {
     const fetchSupervisor = async () => {
-      if (!user?.email) return;
+      if (!user?.username) return;
       
       try {
-        console.log('Fetching supervisor for email:', user.email);
+        console.log('Fetching supervisor for email:', user.username);
         const supervisorService = SupervisorService.getInstance();
-        const supervisorData = await supervisorService.getSupervisorByEmail(user.email);
+        const supervisorData = await supervisorService.getSupervisorByEmail(user.username);
         console.log('Fetched supervisor data:', supervisorData);
         setSupervisor(supervisorData);
       } catch (err) {
@@ -46,7 +46,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ studentData: initialStudent
     };
 
     fetchSupervisor();
-  }, [user?.email]);
+  }, [user?.username]);
 
   // Load data when component mounts or supervisorId changes
   useEffect(() => {
