@@ -347,12 +347,12 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     const fetchSupervisor = async () => {
-      if (!user?.username) return;
+      if (!user?.email) return;
       
       try {
-        console.log('Fetching supervisor for email:', user.username);
+        console.log('Fetching supervisor for email:', user.email);
         const supervisorService = SupervisorService.getInstance();
-        const supervisorData = await supervisorService.getSupervisorByEmail(user.username);
+        const supervisorData = await supervisorService.getSupervisorByEmail(user.email);
         console.log('Fetched supervisor data:', supervisorData);
         setSupervisor(supervisorData);
       } catch (err) {
@@ -361,7 +361,7 @@ const HomePage: React.FC = () => {
     };
 
     fetchSupervisor();
-  }, [user?.username]);
+  }, [user?.email]);
 
   useEffect(() => {
     const fetchChildStats = async () => {
@@ -475,13 +475,12 @@ const HomePage: React.FC = () => {
               <div className="w-full md:w-5/12 mt-8 md:mt-0">
                 {isLoggedIn ? (
                   <motion.div
-                    className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-xl"
+                    className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-xl shadow-[0px_0px_25px_rgba(100,180,255,0.5)]"
                     initial={{ opacity: 0, x: 100 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
                     whileHover={{ 
-                      scale: 1.03, 
-                      boxShadow: "0px 0px 25px rgba(100, 180, 255, 0.5)" 
+                      scale: 1.03
                     }}
                   >
                     <div className="flex items-center gap-4 mb-6">

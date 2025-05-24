@@ -19,7 +19,7 @@ import { SupervisorService, Supervisor } from "../../services/supervisorService"
 // Define the context type from MainLayout
 type MainLayoutContext = {
   isLoggedIn: boolean;
-  user: { username: string; avatar?: string } | null;
+  user: { username: string; email: string; avatar?: string } | null;
 };
 
 const LessonList: React.FC = () => {
@@ -47,12 +47,12 @@ const LessonList: React.FC = () => {
   // Fetch supervisor data when user is available
   useEffect(() => {
     const fetchSupervisor = async () => {
-      if (!user?.username) return;
+      if (!user?.email) return;
       
       try {
-        console.log('Fetching supervisor for email:', user.username);
+        console.log('Fetching supervisor for email:', user.email);
         const supervisorService = SupervisorService.getInstance();
-        const supervisorData = await supervisorService.getSupervisorByEmail(user.username);
+        const supervisorData = await supervisorService.getSupervisorByEmail(user.email);
         console.log('Fetched supervisor data:', supervisorData);
         setSupervisor(supervisorData);
       } catch (err) {
@@ -61,7 +61,7 @@ const LessonList: React.FC = () => {
     };
 
     fetchSupervisor();
-  }, [user?.username]);
+  }, [user?.email]);
 
   useEffect(() => {
     const fetchLessons = async () => {
@@ -292,18 +292,18 @@ const LessonList: React.FC = () => {
                         className="hover:bg-blue-50 transition-colors duration-150 cursor-pointer"
                         onClick={() => handleDetailClick(lesson.id)}
                       >
-                        <td className="px-6 py-4 text-base text-gray-700 font-medium text-center">{lesson.id}</td>
+                        <td className="px-6 py-4 text-base text-gray-700 font-medium text-center capitalize">{lesson.id}</td>
                         <td className="px-6 py-4 text-base text-center">
-                          <span className="font-medium text-blue-600">{lesson.device}</span>
+                          <span className="font-medium text-blue-600 capitalize">{lesson.device}</span>
                         </td>
-                        <td className="px-6 py-4 text-base text-gray-700 text-center">
+                        <td className="px-6 py-4 text-base text-gray-700 text-center capitalize">
                           {lesson.date}
                         </td>
-                        <td className="px-6 py-4 text-base font-medium text-blue-700 text-center">
+                        <td className="px-6 py-4 text-base font-medium text-blue-700 text-center capitalize">
                           {lesson.title}
                         </td>
                         <td className="px-6 py-4 text-center">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusClass(lesson.status)}`}>
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium capitalize ${getStatusClass(lesson.status)}`}>
                             {lesson.status}
                           </span>
                         </td>
@@ -328,7 +328,7 @@ const LessonList: React.FC = () => {
               <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                 <div>
                   <p className="text-sm text-gray-700">
-                    Hiển thị <span className="font-medium">1</span> đến <span className="font-medium">10</span> trong số <span className="font-medium">97</span> kết quả
+                    Hiển thị <span className="font-medium te">1</span> đến <span className="font-medium">5</span> trong số <span className="font-medium">5</span> kết quả
                   </p>
                 </div>
                 <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
@@ -345,7 +345,7 @@ const LessonList: React.FC = () => {
                     <button
                       key={page}
                       className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${currentPage === page
-                          ? "z-10 bg-primary-color border-primary-color text-white"
+                          ? "z-10 bg-primary-color border-primary-color text-[#1D4ED8]"
                           : "bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
                         }`}
                       onClick={() => handlePageChange(page)}
